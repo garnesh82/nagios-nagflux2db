@@ -11,6 +11,7 @@
         $dbuser = "";			// db username
         $dbpass = "";			// db password
         $dbname = "";			// db name
+        $tblname = "";                   // table name           
         $jfname = "$argv[1]";   // accept filename as argument, ignore this as taken care by daemon from the other side :)
 
         $con = mysql_connect("$dbserver","$dbuser","$dbpass") or exit (1);
@@ -66,7 +67,7 @@
                 $inserts[] = "(FROM_UNIXTIME('$Time'), '$Hostname', '$Service', '$_PerformanceLabel', '$Unit', '$value')";
         }
 
-        $query = "INSERT INTO nagios_perfdata(Time, Hostname, Service, PerformanceLabel, Unit, value) VALUES ".implode(", ", $inserts);
+        $query = "INSERT INTO $tblname(Time, Hostname, Service, PerformanceLabel, Unit, value) VALUES ".implode(", ", $inserts);
         if(!mysql_query($query,$con))
         {
                 exit (2);
